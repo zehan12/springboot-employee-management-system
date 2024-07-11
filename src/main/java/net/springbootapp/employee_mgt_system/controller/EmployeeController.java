@@ -1,5 +1,7 @@
 package net.springbootapp.employee_mgt_system.controller;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,14 +22,19 @@ public class EmployeeController {
 
     @PostMapping
     public ResponseEntity<EmployeeDto> createEmployee(@RequestBody EmployeeDto employeeDto) {
-        EmployeeDto createdEmployee =  employeeService.createEmployee(employeeDto);
-        return new ResponseEntity<>(createdEmployee,HttpStatus.CREATED);
+        EmployeeDto createdEmployee = employeeService.createEmployee(employeeDto);
+        return new ResponseEntity<>(createdEmployee, HttpStatus.CREATED);
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<EmployeeDto> getEmployeeById(@PathVariable("id") Long employeeId){
+    public ResponseEntity<EmployeeDto> getEmployeeById(@PathVariable("id") Long employeeId) {
         EmployeeDto employeeDto = employeeService.getEmployeeById(employeeId);
-        return new ResponseEntity<>(employeeDto,HttpStatus.OK);
+        return new ResponseEntity<>(employeeDto, HttpStatus.OK);
     }
-    
+
+    @GetMapping
+    public ResponseEntity<List<EmployeeDto>> getAllEmployees() {
+        List<EmployeeDto> listOfEmployeeDtos = employeeService.getAllEmployees();
+        return new ResponseEntity<>(listOfEmployeeDtos, HttpStatus.OK);
+    }
 }

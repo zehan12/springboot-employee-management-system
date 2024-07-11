@@ -1,5 +1,9 @@
 package net.springbootapp.employee_mgt_system.service.impl;
 
+import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Service;
 
 import lombok.AllArgsConstructor;
@@ -31,5 +35,14 @@ public class EmployeeServiceImpl implements EmployeeService {
                         () -> new ResourceNotFoundException(
                                 "Employee is not exist with the given id: " + employeeId));
         return EmployeeMapper.mapToEmployeeDto(employee);
+    }
+
+    @Override
+    public List<EmployeeDto> getAllEmployees() {
+        List<Employee> employeesList = employeeRepository.findAll();
+        return employeesList
+                .stream()
+                .map((employee) -> EmployeeMapper.mapToEmployeeDto(employee))
+                .collect(Collectors.toList());
     }
 }
